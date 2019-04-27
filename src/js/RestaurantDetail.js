@@ -27,6 +27,7 @@ class RestaurantDetail extends Component {
 
     this.handleVouch = this.handleVouch.bind(this)
     this.handleReject = this.handleReject.bind(this)
+    this.getResult = this.getResult.bind(this)
   }
 
   componentDidMount() {
@@ -64,6 +65,14 @@ class RestaurantDetail extends Component {
   handleReject(event) {
     event.preventDefault();
     this.vsInstance.reject(this.state.restaurantName, {
+      from: this.state.account,
+      gasLimit: 6200000,
+    })
+  }
+
+  getResult(event) {
+    event.preventDefault();
+    this.vsInstance.getResult(this.state.restaurantName, {
       from: this.state.account,
       gasLimit: 6200000,
     })
@@ -113,6 +122,11 @@ class RestaurantDetail extends Component {
         <div>
           <button type="button" onClick={this.handleReject}>
             Reject
+          </button>
+        </div>
+        <div>
+          <button onClick={this.getResult}>
+            GetResult
           </button>
         </div>
       </div>
