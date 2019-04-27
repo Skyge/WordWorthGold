@@ -11,13 +11,13 @@ contract ValueSystem {
 
     uint8 constant RewardRate = 3;
     uint8 constant PunishmentRate = 5;
-    uint8 constant QualifiedRate = 10; // judge by rejecting numbers
-    uint8 constant UnqualifiedRate = 50; // judge by vouching numbers
+    uint8 constant QualifiedRate = 10;      // judge by rejecting numbers
+    uint8 constant UnqualifiedRate = 50;    // judge by vouching numbers
     uint8 constant UserDaliyVoteLimited = 10;
     uint8 constant TenPer = 100;
     uint8 constant Percent = 10;
     uint16 constant Decimal = 1000;
-    uint64 constant VoteInterval = 1 days;
+    uint64 constant VoteInterval = 1 minutes; // todo 1 days
     bytes32[] public BlackList;
     bytes32[] public WhiteList;
     bytes32[] public restaurantList;
