@@ -113,6 +113,9 @@ class RestaurantList extends Component {
     var pathUser = {
       pathname: '/newUser',
     }
+    var pathUserDetail = {
+      pathname: '/userDetail',
+    }
 
     return (
       
@@ -142,6 +145,16 @@ class RestaurantList extends Component {
                 <Link to={pathUser} >
                   <Button>
                     Register
+                  </Button>
+                </Link>
+              </div>) }
+          </div>
+
+          <div>
+            { !this.state.isAdmin && (<div>
+                <Link to={pathUserDetail} >
+                  <Button>
+                    User Detail
                   </Button>
                 </Link>
               </div>) }

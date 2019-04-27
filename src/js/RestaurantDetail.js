@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Web3 from 'web3'
 import TruffleContract from 'truffle-contract'
 import ValueSystem from '../../build/contracts/ValueSystem.json'
+import moment from 'moment';
 
 class RestaurantDetail extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class RestaurantDetail extends Component {
         // console.log("here is ====", name)
         {this.setState({ restaurantName: name }),
         this.vsInstance.restaurants(name).then(properties =>
-          {console.log("here is ====", properties)
+          {
             this.setState({
               vouchNumber: properties[0].c[0],
               rejectNumber: properties[1].c[0],
@@ -95,7 +96,7 @@ class RestaurantDetail extends Component {
         </div>
         <div>
         <div>
-          Restaurant Create Time: {this.state.createTime}
+          Restaurant Create Time: {moment(this.state.createTime).format("YYYY-MM-DD HH:mm:ss")}
         </div>
         </div>
         <div>

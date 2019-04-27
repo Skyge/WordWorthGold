@@ -34,15 +34,15 @@ class NewUser extends Component {
   })}
 
   userRegister(name) {
-    console.log("u come here ====", name)
     this.vsInstance.userRegister(this.web3.toHex(name), {
       from: this.state.account,
       gasLimit: 6200000,
     })
+    this.setState({ hasRegistered: true })
   }
 
   render() {
-    var pathback = {
+    var pathBack = {
       pathname: '/',
     }
     return (
@@ -68,8 +68,8 @@ class NewUser extends Component {
           </button>
         </form>
         <div>
-            { !this.state.hasRegistered && (<div>
-                <Link to={pathback} >
+            { this.state.hasRegistered && (<div>
+                <Link to={pathBack} >
                   <Button>
                     Go Back
                   </Button>
