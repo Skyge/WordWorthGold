@@ -22,8 +22,6 @@ contract ValueSystem {
     bytes32[] public WhiteList;
     bytes32[] public restaurantList;
     address private owner_;
-    // todo for test
-    uint256[] public testNum;
 
     struct Restaurant {
         uint256 vouchNumber;
@@ -67,9 +65,6 @@ contract ValueSystem {
 
     constructor() public {
         owner_ = msg.sender;
-        testNum.push(444);
-        testNum.push(555);
-        testNum.push(666);
     }
 
     function owner() public view returns (address) {
@@ -213,10 +208,6 @@ contract ValueSystem {
 
     function restaurantListLength() public view returns(uint256) {
         return restaurantList.length;
-    }
-
-    function testNumLength() public view returns(uint256) {
-        return testNum.length;
     }
 
     function getRestaurantByName(bytes32 name) public view returns (Restaurant memory) {
