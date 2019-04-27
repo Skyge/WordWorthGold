@@ -14,7 +14,7 @@ class RestaurantDetail extends Component {
       createTime: 0,
       vouchers: [],
       rejecters: [],
-
+      account: '0x0',
     }
 
     this.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545')
@@ -24,10 +24,13 @@ class RestaurantDetail extends Component {
     this.vs = TruffleContract(ValueSystem)
     this.vs.setProvider(this.web3Provider)
 
-    // this.addRestaurant = this.addRestaurant.bind(this)
+    this.handleVouch = this.handleVouch.bind(this)
+    this.handleReject = this.handleReject.bind(this)
   }
 
   componentDidMount() {
+    this.web3.eth.getCoinbase((err, account) => {
+      this.setState({ account: account })
       this.vs.deployed().then((vsInstance) => {
       // initialize
       this.vsInstance = vsInstance
@@ -46,17 +49,31 @@ class RestaurantDetail extends Component {
           })}
         )
     })
+  })}
+
+  handleVouch() {
+    this.vsInstance.vouch(this.state.restaurantName)
+  }
+
+  handleReject() {
+    this.vsInstance.reject(this.state.restaurantName)
   }
 
   render() {
-    console.log("u r in restaurant details", this.web3.toAscii(this.state.restaurantName))
+    console.log("u r in restaurant details", this.state.restaurantName)
+    let restaurantName
+    if (this.state.restaurantName === '0xe891b1e58c85e6a1a7e584bf0000000000000000000000000000000000000000') {
+      restaurantName = '葱包桧儿'
+    } else {
+      restaurantName = '猫耳朵'
+    }
     return (
       <div>
         <b>
           restaurant details
         </b>
         <div>
-          Restaurant Name: {this.state.restaurantName}
+          Restaurant Name: {restaurantName}
         </div>
         <div>
           Vouch Number: {this.state.vouchNumber}
@@ -77,6 +94,16 @@ class RestaurantDetail extends Component {
         </div>
         <div>
           Rejecters:
+        </div>
+        <div>
+          <button onclick={this.handleVouch}>
+            Vote
+          </button>
+        </div>
+        <div>
+          <button onclick={this.handleVouch}>
+            Reject
+          </button>
         </div>
       </div>
     )

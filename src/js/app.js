@@ -10,6 +10,7 @@ import ShowBlackList from './ShowBlackList'
 import RestaurantList from './RestaurantList'
 import NewRestaurant from './NewRestaurant'
 import RestaurantDetail from './RestaurantDetail'
+import NewUser from './NewUser'
 import 'bootstrap/dist/css/bootstrap.css'
 import Button from '@material-ui/core/Button';
 // import { Link } from 'react-router-dom'
@@ -30,7 +31,7 @@ class App extends Component {
         <Route exact path="/" component={RestaurantList}/>
         <Route path="/newRestaurant" component={NewRestaurant}/>
         <Route path="/restaurantDetail" component={RestaurantDetail}/>
-        {/* <Route path="/login" component={Login}/> */}
+        <Route path="/newUser" component={NewUser}/>
       </Switch>
       </div>
     </Router>

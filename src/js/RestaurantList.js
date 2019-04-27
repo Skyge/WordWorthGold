@@ -7,6 +7,7 @@ import Content from './Content'
 import ShowWhiteList from './ShowWhiteList'
 import ShowRestaurantList from './ShowRestaurantList'
 import ShowBlackList from './ShowBlackList'
+import NewUser from './NewUser'
 import { Link } from 'react-router-dom'
 
 import 'bootstrap/dist/css/bootstrap.css'
@@ -103,12 +104,13 @@ class RestaurantList extends Component {
   }
 
   render() {
-    
-    console.log("===white list is -===", this.state.RestaurantList)
     var data = {account:this.state.account}
-    var path = {
+    var pathAdmin = {
       pathname: '/newRestaurant',
       state: data,
+    }
+    var pathUser = {
+      pathname: '/newUser',
     }
 
     return (
@@ -135,29 +137,25 @@ class RestaurantList extends Component {
           <br/>
 
           <div>
+            { this.state.isAdmin && (<div>
+                <Link to={pathUser} >
+                  <Button>
+                    Register
+                  </Button>
+                </Link>
+              </div>) }
+          </div>
+
+          <div>
             { this.state.isAdmin
               && (<div>
-                <Link to={path} >
+                <Link to={pathAdmin} >
                   <Button>
                     Add new restaurant
                   </Button>
                 </Link>
               </div>)}
           </div>
-
-          {/* account: '0x0',
-      adminAccount: '0x0', */}
-
-          {/* { this.state.loading || this.state.voting
-            ? <p class='text-center'>Loading...</p>
-            : <Content
-                account={this.state.account}
-                candidates={this.state.candidates}
-                hasVoted={this.state.hasVoted}
-                votedFor={this.state.votedFor}
-                castVote={this.castVote} />
-          } */}
-
         </div>
       </div>
     )
