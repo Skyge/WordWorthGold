@@ -1,4 +1,5 @@
 pragma solidity 0.5.0;
+pragma experimental ABIEncoderV2;
 
 contract ValueSystem {
     enum Stages{
@@ -43,13 +44,13 @@ contract ValueSystem {
         bool    hasRegistered;
     }
 
-    mapping(bytes32 => Restaurant) restaurants;
-    mapping(bytes32 => mapping(address => uint256)) vouchIndexes;
-    mapping(bytes32 => mapping(address => uint256)) rejectIndexes;
-    mapping(address => User) users;
-    mapping(address => bytes32[]) voteFor;
+    mapping(bytes32 => Restaurant) public restaurants;
+    mapping(bytes32 => mapping(address => uint256)) public vouchIndexes;
+    mapping(bytes32 => mapping(address => uint256)) public rejectIndexes;
+    mapping(address => User) public users;
+    mapping(address => bytes32[]) public voteFor;
     mapping(address => bytes32[]) public dailyVoting;
-    mapping(bytes32 => address) managers;
+    mapping(bytes32 => address) public managers;
 
     event VoteSuccess(address indexed voter, bytes32 indexed restaurantName, bool vouch);
     event NewRestaurant(bytes32 indexed name, address indexed owner);
@@ -216,5 +217,9 @@ contract ValueSystem {
 
     function testNumLength() public view returns(uint256) {
         return testNum.length;
+    }
+
+    function getRestaurantByName(bytes32 name) public view returns (Restaurant memory) {
+        return restaurants[name];
     }
 }
