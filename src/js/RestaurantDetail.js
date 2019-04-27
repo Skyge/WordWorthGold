@@ -17,7 +17,7 @@ class RestaurantDetail extends Component {
       account: '0x0',
     }
 
-    this.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545')
+    this.web3Provider = web3.currentProvider
 
     this.web3 = new Web3(this.web3Provider)
 

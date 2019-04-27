@@ -35,11 +35,13 @@ class RestaurantList extends Component {
 
     }
 
-    // if (typeof web3 != 'undefined') {
-    //   this.web3Provider = web3.currentProvider
-    // } else {
+    if (typeof web3 != 'undefined') {
+      console.log("web3 is not undefine")
+      this.web3Provider = web3.currentProvider
+    } else {
+      console.log("web3 is  undefine")
       this.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545')
-    // }
+    }
 
     this.web3 = new Web3(this.web3Provider)
 
@@ -83,7 +85,6 @@ class RestaurantList extends Component {
           console.log("u r in restaurant is ===", nums.c[0])
           for (let i=0;i<nums.c[0]; i++) {
             this.vsInstance.restaurantList(i).then(value => {
-              console.log(" error is here --->>>>", value)
               this.setState(preState => ({
                 RestaurantList: [...preState.RestaurantList, value]
               }))
@@ -137,7 +138,7 @@ class RestaurantList extends Component {
           <br/>
 
           <div>
-            { this.state.isAdmin && (<div>
+            { !this.state.isAdmin && (<div>
                 <Link to={pathUser} >
                   <Button>
                     Register
