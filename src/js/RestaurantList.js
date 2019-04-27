@@ -47,9 +47,6 @@ class RestaurantList extends Component {
 
     this.vs = TruffleContract(ValueSystem)
     this.vs.setProvider(this.web3Provider)
-
-    console.log("---you login in----");
-    // this.watchEvents = this.watchEvents.bind(this)
   }
 
   componentDidMount() {
@@ -61,25 +58,25 @@ class RestaurantList extends Component {
         // initialize
         this.vsInstance = vsInstance
         // whiteList
-        // this.vsInstance.whiteListLength().then(nums => {
-        //   for (let i=0;i<nums; i++) {
-        //     this.vsInstance.WhiteList(i).then(value => {
-        //       this.setState(preState => ({
-        //         WhiteList: [...preState.WhiteList, value.c[0]]
-        //       }))
-        //     })  
-        //   }
-        // })
+        this.vsInstance.whiteListLength().then(nums => {
+          for (let i=0;i<nums.c[0]; i++) {
+            this.vsInstance.WhiteList(i).then(value => {
+              this.setState(preState => ({
+                WhiteList: [...preState.WhiteList, value.c[0]]
+              }))
+            })  
+          }
+        })
         // // blackList
-        // this.vsInstance.blackListLength().then(nums => {
-        //   for (let i=0;i<nums; i++) {
-        //     this.vsInstance.BlackList(i).then(value => {
-        //       this.setState(preState => ({
-        //         BlackList: [...preState.BlackList, value.c[0]]
-        //       }))
-        //     })  
-        //   }
-        // })
+        this.vsInstance.blackListLength().then(nums => {
+          for (let i=0;i<nums.c[0]; i++) {
+            this.vsInstance.BlackList(i).then(value => {
+              this.setState(preState => ({
+                BlackList: [...preState.BlackList, value.c[0]]
+              }))
+            })  
+          }
+        })
         // restaurantList
         this.vsInstance.restaurantListLength().then(nums => {
           console.log("u r in restaurant is ===", nums.c[0])
