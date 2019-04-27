@@ -4,8 +4,9 @@ import TruffleContract from 'truffle-contract'
 import ValueSystem from '../../build/contracts/ValueSystem.json'
 // import * as utils from 'web3-utils';
 
-
+var count = 0;
 class NewRestaurant extends Component {
+  
   constructor(props) {
     super(props)
     this.state = {
@@ -43,17 +44,27 @@ class NewRestaurant extends Component {
     console.log("restaurant name is ====", restaurantName)
     // todo fix
     // restaurantName = this.web3.utils.toHex(restaurantName)
-    // restaurantName = "0x847153056867513f" // 葱包桧儿
-    restaurantName = "0x732b80336735" // 猫耳朵
+    
     // console.log("restaurant name is ====", this.web3.utils.toHex(restaurantName))
-    console.log("restaurant address is ====", restaurantAddress)
-    this.vsInstance.addRestaurant(
-      restaurantName, 
-      restaurantAddress, 
-      { from: this.props.location.state.account,
-        gasLimit: 6700000,
-       }
-    )
+    console.log("restaurant address is ====", restaurantAddress, count)
+    if (count === 0) {
+      this.vsInstance.addRestaurant(
+        "0x847153056867513f", // 葱包桧儿
+        restaurantAddress, 
+        { from: this.props.location.state.account,
+          gasLimit: 6700000,
+         }
+      )
+      count += 1
+    } else if (count === 1) {
+      this.vsInstance.addRestaurant(
+        "0x732b80336735", // 猫耳朵
+        restaurantAddress, 
+        { from: this.props.location.state.account,
+          gasLimit: 6700000,
+         }
+      )
+    }
   }
 
   render() {

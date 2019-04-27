@@ -8,7 +8,12 @@ class RestaurantDetail extends Component {
     super(props)
     this.state = {
       restaurantName: '',
-      restaurantAddress: '',
+      vouchNumber: 0,
+      rejectNumber: 0,
+      status: 0,
+      vouchers: [],
+      rejecters: [],
+
     }
 
     this.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545')
@@ -26,18 +31,47 @@ class RestaurantDetail extends Component {
       // initialize
       this.vsInstance = vsInstance
 
-      this.vsInstance.restaurantList[this.props.location.state.index]
+      this.vsInstance.restaurantList(this.props.location.state.index).then(name =>
+        // console.log("here is ====", name)
+        {this.setState({ restaurantName: name }),
+        this.vsInstance.restaurants(name).then(properties =>
+          {console.log("here is ====", properties)
+            this.setState({
+              vouchNumber: properties[0].c[0],
+              rejectNumber: properties[1].c[0],
+              createTime: properties[2].c[0],
+              status: properties[3].c[0]
+            })
+          })}
+        )
     })
   }
 
   render() {
-    console.log("u r in restaurant details", this.props.location.state.index)
+    console.log("u r in restaurant details", this.state.restaurantName)
     return (
       <div>
         <b>
           restaurant details
         </b>
-        
+        <div>
+          Restaurant Name: {this.state.restaurantName}
+        </div>
+        <div>
+          Vouch Number: {this.state.vouchNumber}
+        </div>
+        <div>
+          Reject Number: {this.state.rejectNumber}
+        </div>
+        <div>
+          Restaurant Status: {this.state.status}
+        </div>
+        <div>
+          Vouchers: 
+        </div>
+        <div>
+          Rejecters:
+        </div>
       </div>
     )
   }
