@@ -11,6 +11,7 @@ class RestaurantDetail extends Component {
       vouchNumber: 0,
       rejectNumber: 0,
       status: 0,
+      createTime: 0,
       vouchers: [],
       rejecters: [],
 
@@ -40,7 +41,7 @@ class RestaurantDetail extends Component {
               vouchNumber: properties[0].c[0],
               rejectNumber: properties[1].c[0],
               createTime: properties[2].c[0],
-              status: properties[3].c[0]
+              status: properties[3].c[0],
             })
           })}
         )
@@ -48,7 +49,7 @@ class RestaurantDetail extends Component {
   }
 
   render() {
-    console.log("u r in restaurant details", this.state.restaurantName)
+    console.log("u r in restaurant details", this.web3.toAscii(this.state.restaurantName))
     return (
       <div>
         <b>
@@ -65,6 +66,11 @@ class RestaurantDetail extends Component {
         </div>
         <div>
           Restaurant Status: {this.state.status}
+        </div>
+        <div>
+        <div>
+          Restaurant Create Time: {this.state.createTime}
+        </div>
         </div>
         <div>
           Vouchers: 

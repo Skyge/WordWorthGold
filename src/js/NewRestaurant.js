@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import Web3 from 'web3'
 import TruffleContract from 'truffle-contract'
 import ValueSystem from '../../build/contracts/ValueSystem.json'
-// import * as utils from 'web3-utils';
 
-var count = 0;
 class NewRestaurant extends Component {
   
   constructor(props) {
@@ -23,52 +21,29 @@ class NewRestaurant extends Component {
 
     this.addRestaurant = this.addRestaurant.bind(this)
 
-    console.log("look at here")
     console.log("u r passing a parameter=====", this.props.location.state.account)
   }
 
   componentDidMount() {
-    // TODO: Refactor with promise chain
-    // this.web3.eth.getCoinbase((err, account) => {
-    //   this.setState({ account })
-    //   console.log("---you are finding----", this.state.account);
-      this.vs.deployed().then((vsInstance) => {
-        // initialize
-        this.vsInstance = vsInstance
-
-      })
-    // })
+    this.vs.deployed().then((vsInstance) => {
+      // initialize
+      this.vsInstance = vsInstance
+    })
   }
 
   addRestaurant(restaurantName, restaurantAddress) {
-    console.log("restaurant name is ====", restaurantName)
-    // todo fix
-    // restaurantName = this.web3.utils.toHex(restaurantName)
-    
-    // console.log("restaurant name is ====", this.web3.utils.toHex(restaurantName))
-    console.log("restaurant address is ====", restaurantAddress, count)
-    if (count === 0) {
-      this.vsInstance.addRestaurant(
-        "0x847153056867513f", // 葱包桧儿
-        restaurantAddress, 
-        { from: this.props.location.state.account,
-          gasLimit: 6700000,
-         }
-      )
-      count += 1
-    } else if (count === 1) {
-      this.vsInstance.addRestaurant(
-        "0x732b80336735", // 猫耳朵
-        restaurantAddress, 
-        { from: this.props.location.state.account,
-          gasLimit: 6700000,
-         }
-      )
-    }
+    console.log("restaurant name hex is ====", this.web3.toHex(restaurantName))
+    this.vsInstance.addRestaurant(
+      this.web3.fromAscii(restaurantName), // 葱包桧儿  猫耳朵
+      restaurantAddress, 
+      { 
+        from: this.props.location.state.account,
+        gasLimit: 6700000, 
+      }
+    )
   }
 
   render() {
-    
     return (
       <div>
         <b>
