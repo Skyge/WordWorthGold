@@ -51,12 +51,21 @@ class RestaurantDetail extends Component {
     })
   })}
 
-  handleVouch() {
-    this.vsInstance.vouch(this.state.restaurantName)
+  handleVouch(event) {
+    event.preventDefault();
+    console.log("u r vouching ====")
+    this.vsInstance.vouch(this.state.restaurantName, {
+      from: this.state.account,
+      gasLimit: 6200000,
+    })
   }
 
-  handleReject() {
-    this.vsInstance.reject(this.state.restaurantName)
+  handleReject(event) {
+    event.preventDefault();
+    this.vsInstance.reject(this.state.restaurantName, {
+      from: this.state.account,
+      gasLimit: 6200000,
+    })
   }
 
   render() {
@@ -96,12 +105,12 @@ class RestaurantDetail extends Component {
           Rejecters:
         </div>
         <div>
-          <button onclick={this.handleVouch}>
+          <button onClick={this.handleVouch}>
             Vote
           </button>
         </div>
         <div>
-          <button onclick={this.handleVouch}>
+          <button type="button" onClick={this.handleReject}>
             Reject
           </button>
         </div>
