@@ -52,13 +52,13 @@ class RestaurantDetail extends Component {
           })}
         )
 
-        this.vsInstance.managers(this.state.restaurantName).then(address =>
-          {// console.log("supplier addr is ", address)
-            if (this.state.account === address) {
-              this.setState({ canAccess: true })
-            }
-          }
-        )
+        // this.vsInstance.managers(this.state.restaurantName).then(address =>
+        //   {// console.log("supplier addr is ", address)
+        //     if (this.state.account === address) {
+        //       this.setState({ canAccess: true })
+        //     }
+        //   }
+        // )
     })
   })}
 
@@ -88,9 +88,8 @@ class RestaurantDetail extends Component {
   }
 
   render() {
-    console.log("u r in restaurant details", this.state.restaurantName)
     let restaurantName
-    if (this.state.restaurantName === '0xe891b1e58c85e6a1a7e584bf0000000000000000000000000000000000000000') {
+    if (this.state.restaurantName === '0x847153056867513f000000000000000000000000000000000000000000000000') {
       restaurantName = '葱包桧儿'
     } else {
       restaurantName = '猫耳朵'
@@ -139,7 +138,7 @@ class RestaurantDetail extends Component {
         </div>
         <div style={pad}>
           <button onClick={this.handleVouch} style={buttonStyle}>
-            Vote
+            Vouch
           </button>
         </div>
         <div style={pad}>
@@ -148,7 +147,7 @@ class RestaurantDetail extends Component {
           </button>
         </div>
         <div>
-          {this.state.canAccess 
+          {!this.state.canAccess 
             && (
               <div style={pad}>
                 <button onClick={this.getResult} style={buttonStyle}>

@@ -49,6 +49,7 @@ class RestaurantList extends Component {
         this.vsInstance = vsInstance
         // whiteList
         this.vsInstance.whiteListLength().then(nums => {
+          console.log(nums)
           for (let i=0;i<nums.c[0]; i++) {
             this.vsInstance.WhiteList(i).then(value => {
               this.setState(preState => ({
@@ -69,7 +70,7 @@ class RestaurantList extends Component {
         })
         // restaurantList
         this.vsInstance.restaurantListLength().then(nums => {
-          console.log("u r in restaurant is ===", nums.c[0])
+          console.log("u r in restaurant is ===", nums)
           for (let i=0;i<nums.c[0]; i++) {
             this.vsInstance.restaurantList(i).then(value => {
               this.setState(preState => ({
@@ -92,6 +93,8 @@ class RestaurantList extends Component {
   }
 
   render() {
+    console.log("account is ---", this.state.account)
+    console.log("owner is ---", this.state.adminAccount)
     var data = {account:this.state.account}
     var pathAdmin = {
       pathname: '/newRestaurant',
