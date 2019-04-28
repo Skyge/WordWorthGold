@@ -26,7 +26,6 @@ class UserDetail extends Component {
 
     this.vs = TruffleContract(ValueSystem)
     this.vs.setProvider(this.web3Provider)
-
   }
 
   componentDidMount() {
@@ -36,18 +35,6 @@ class UserDetail extends Component {
       // initialize
       this.vsInstance = vsInstance
 
-      // this.vsInstance.restaurantList(this.props.location.state.index).then(name =>
-      //   {this.setState({ restaurantName: name }),
-      //   this.vsInstance.restaurants(name).then(properties =>
-      //     {console.log("here is ====", properties)
-      //       this.setState({
-      //         vouchNumber: properties[0].c[0],
-      //         rejectNumber: properties[1].c[0],
-      //         createTime: properties[2].c[0],
-      //         status: properties[3].c[0],
-      //       })
-      //     })}
-      //   )
       this.vsInstance.users(this.state.account).then(properties =>
         {
           this.setState({
@@ -67,34 +54,52 @@ class UserDetail extends Component {
     var pathBack = {
       pathname: '/',
     }
+    
+    let titleStyle = {
+      fontSize: '20px',
+      padding: '40px',
+      textAlign:'center',
+    }
+    let contentStyle = {
+      fontSize: '16px',
+      padding: '13px',
+    }
+    let buttonStyle = {
+      borderRadius: '3px',
+      backgroundColor: '#1E90FF',
+    }
     return (
-      <div>
-        <b>
-          user details
-        </b>
-        <div>
+      <div >
+        <div style={titleStyle}>
+          <p>
+            user details
+          </p>
+        </div>
+        <div style={contentStyle}>
           User Name: {this.web3.toAscii(this.state.userName)}
         </div>
-        <div>
+        <div style={contentStyle}>
           Total Vouch: {this.state.totalVouch}
         </div>
-        <div>
+        <div style={contentStyle}>
           Total Reject: {this.state.totalReject}
         </div>
-        <div>
+        <div style={contentStyle}>
           Current Score: {this.state.currentScore}
         </div>
-        <div>
+        <div style={contentStyle}>
           <div>
             Voting Count: {this.state.votingCount}
           </div>
         </div>
-        <div>
-          Last Voted Time: {moment(this.state.lastVotedTime).format("YYYY-MM-DD HH:mm:ss")}
+        <div style={contentStyle}>
+          Last Voted Time: {(this.state.lastVotedTime === 0)
+                              ? 0
+                              : moment(this.state.lastVotedTime).format("YYYY-MM-DD HH:mm:ss")}
         </div>
-        <div>
+        <div style={contentStyle}>
             <Link to={pathBack} >
-              <Button>
+              <Button style={buttonStyle}>
                 Go Back
               </Button>
             </Link>
