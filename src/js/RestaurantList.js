@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
-// import ReactDOM from 'react-dom'
 import Web3 from 'web3'
 import TruffleContract from 'truffle-contract'
 import ValueSystem from '../../build/contracts/ValueSystem.json'
-import Content from './Content'
-import ShowWhiteList from './ShowWhiteList'
 import ShowRestaurantList from './ShowRestaurantList'
 import ShowBlackList from './ShowBlackList'
-import NewUser from './NewUser'
 import { Link } from 'react-router-dom'
-
 import 'bootstrap/dist/css/bootstrap.css'
 import Button from '@material-ui/core/Button';
 
@@ -18,7 +13,6 @@ class RestaurantList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      
       candidates: [],
       hasVoted: false,
       loading: true,
@@ -31,8 +25,6 @@ class RestaurantList extends Component {
       WhiteList: [],
       BlackList: [],
       RestaurantList: [], // `葱包桧儿, 猫耳朵`
-      test: []
-
     }
 
     if (typeof web3 != 'undefined') {
@@ -53,7 +45,6 @@ class RestaurantList extends Component {
     // TODO: Refactor with promise chain
     this.web3.eth.getCoinbase((err, account) => {
       this.setState({ account })
-      console.log("---you are finding----", this.state.account);
       this.vs.deployed().then((vsInstance) => {
         // initialize
         this.vsInstance = vsInstance
@@ -62,17 +53,17 @@ class RestaurantList extends Component {
           for (let i=0;i<nums.c[0]; i++) {
             this.vsInstance.WhiteList(i).then(value => {
               this.setState(preState => ({
-                WhiteList: [...preState.WhiteList, value.c[0]]
+                WhiteList: [...preState.WhiteList, this.web3.toAscii(value)]
               }))
             })  
           }
         })
-        // // blackList
+        // blackList
         this.vsInstance.blackListLength().then(nums => {
           for (let i=0;i<nums.c[0]; i++) {
             this.vsInstance.BlackList(i).then(value => {
               this.setState(preState => ({
-                BlackList: [...preState.BlackList, value.c[0]]
+                BlackList: [...preState.BlackList, this.web3.toAscii(value)]
               }))
             })  
           }
@@ -83,19 +74,19 @@ class RestaurantList extends Component {
           for (let i=0;i<nums.c[0]; i++) {
             this.vsInstance.restaurantList(i).then(value => {
               this.setState(preState => ({
-                RestaurantList: [...preState.RestaurantList, value]
+                RestaurantList: [...preState.RestaurantList, this.web3.toAscii(value)]
               }))
             })  
           }
         })
 
         this.vsInstance.owner().then(address =>
-          {console.log("owner is ", address)
-          this.setState({ adminAccount: address })
-          if (this.state.account === this.state.adminAccount) {
-            this.setState({ isAdmin: true })
+          {
+            this.setState({ adminAccount: address })
+            if (this.state.account === this.state.adminAccount) {
+              this.setState({ isAdmin: true })
+            }
           }
-        }
         )
       })
     })
@@ -114,13 +105,38 @@ class RestaurantList extends Component {
       pathname: '/userDetail',
     }
 
+    let titleStyle = {padding:'55px'}
+    let WhiteListStyle = {padding:'35px'}
+    let BlackListStyle = {padding:'35px'}
+    let buttonStyle = {
+      borderRadius: '3px',
+      backgroundColor: '#1E90FF',
+    }
+    let pad = {padding:'18px'}
+
     return (
-      
       <div class='row'>
-        <div class='col-lg-12 text-center' >
+        <div class='col-lg-12 text-center' style={titleStyle} >
           <h1>Restaurants Display</h1>
           <div>
-            { this.state.WhiteList.length !== 0 && <ShowWhiteList />}
+            { this.state.WhiteList.length !== 0 
+              && (
+                  <div style={WhiteListStyle}>
+                    <p>
+                      white list
+                    </p>
+                    <div>
+                      {
+                        this.state.WhiteList.map((item,index)=>{
+                          return <li name-index={index}><Link to={{
+                            pathname: '/restaurantDetail',
+                            state: {index},
+                          }}>{item}</Link></li>
+                        })
+                      }
+                    </div>
+                  </div>
+                  )}
           </div>
           <br/>
 
@@ -133,35 +149,52 @@ class RestaurantList extends Component {
           <br/>
 
           <div>
-            { this.state.BlackList.length !== 0 && <ShowBlackList />}
+            { this.state.BlackList.length !== 0 
+              && (
+                <div style={BlackListStyle}>
+                  <p>
+                    white list
+                  </p>
+                  <div>
+                    {
+                      this.state.BlackList.map((item,index)=>{
+                        return <li name-index={index}><Link to={{
+                          pathname: '/restaurantDetail',
+                          state: {index},
+                        }}>{item}</Link></li>
+                      })
+                    }
+                  </div>
+                </div>
+                )}
           </div>
           <br/>
 
-          <div>
+          <div style={pad}>
             { !this.state.isAdmin && (<div>
                 <Link to={pathUser} >
-                  <Button>
+                  <Button style={buttonStyle}>
                     Register
                   </Button>
                 </Link>
               </div>) }
           </div>
 
-          <div>
+          <div style={pad}>
             { !this.state.isAdmin && (<div>
                 <Link to={pathUserDetail} >
-                  <Button>
+                  <Button style={buttonStyle}>
                     User Detail
                   </Button>
                 </Link>
               </div>) }
           </div>
 
-          <div>
+          <div style={pad}>
             { this.state.isAdmin
-              && (<div>
+              && (<div >
                 <Link to={pathAdmin} >
-                  <Button>
+                  <Button style={buttonStyle}>
                     Add new restaurant
                   </Button>
                 </Link>
