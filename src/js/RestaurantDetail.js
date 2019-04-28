@@ -16,6 +16,7 @@ class RestaurantDetail extends Component {
       vouchers: [],
       rejecters: [],
       account: '0x0',
+      canAccess: false,
     }
 
     this.web3Provider = web3.currentProvider
@@ -38,8 +39,8 @@ class RestaurantDetail extends Component {
       this.vsInstance = vsInstance
 
       this.vsInstance.restaurantList(this.props.location.state.index).then(name =>
-        // console.log("here is ====", name)
-        {this.setState({ restaurantName: name }),
+        { // console.log("here is ====", name)
+        this.setState({ restaurantName: name }),
         this.vsInstance.restaurants(name).then(properties =>
           {
             this.setState({
@@ -49,6 +50,14 @@ class RestaurantDetail extends Component {
               status: properties[3].c[0],
             })
           })}
+        )
+
+        this.vsInstance.managers(this.state.restaurantName).then(address =>
+          {// console.log("supplier addr is ", address)
+            if (this.state.account === address) {
+              this.setState({ canAccess: true })
+            }
+          }
         )
     })
   })}
@@ -86,48 +95,67 @@ class RestaurantDetail extends Component {
     } else {
       restaurantName = '猫耳朵'
     }
+    let titleStyle = {
+      fontSize: '20px',
+      padding: '40px',
+      textAlign:'center',
+    }
+    let contentStyle = {
+      fontSize: '16px',
+      padding: '13px',
+    }
+    let buttonStyle = {
+      borderRadius: '3px',
+      backgroundColor: '#1E90FF',
+    }
+    let pad = {padding:'13px'}
     return (
       <div>
-        <b>
-          restaurant details
-        </b>
-        <div>
+        <div style={titleStyle}>
+          <p>
+            restaurant details
+          </p>
+        </div>
+        <div style={contentStyle}>
           Restaurant Name: {restaurantName}
         </div>
-        <div>
+        <div style={contentStyle}>
           Vouch Number: {this.state.vouchNumber}
         </div>
-        <div>
+        <div style={contentStyle}>
           Reject Number: {this.state.rejectNumber}
         </div>
-        <div>
+        <div style={contentStyle}>
           Restaurant Status: {this.state.status}
         </div>
-        <div>
-        <div>
+        <div style={contentStyle}>
           Restaurant Create Time: {moment(this.state.createTime).format("YYYY-MM-DD HH:mm:ss")}
         </div>
-        </div>
-        <div>
+        <div style={contentStyle}>
           Vouchers: 
         </div>
-        <div>
+        <div style={contentStyle}>
           Rejecters:
         </div>
-        <div>
-          <button onClick={this.handleVouch}>
+        <div style={pad}>
+          <button onClick={this.handleVouch} style={buttonStyle}>
             Vote
           </button>
         </div>
-        <div>
-          <button type="button" onClick={this.handleReject}>
+        <div style={pad}>
+          <button type="button" onClick={this.handleReject} style={buttonStyle}>
             Reject
           </button>
         </div>
         <div>
-          <button onClick={this.getResult}>
-            GetResult
-          </button>
+          {this.state.canAccess 
+            && (
+              <div style={pad}>
+                <button onClick={this.getResult} style={buttonStyle}>
+                  GetResult
+                </button>
+              </div>
+            )}
         </div>
       </div>
     )
