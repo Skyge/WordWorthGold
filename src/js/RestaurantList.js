@@ -3,7 +3,6 @@ import Web3 from 'web3'
 import TruffleContract from 'truffle-contract'
 import ValueSystem from '../../build/contracts/ValueSystem.json'
 import ShowRestaurantList from './ShowRestaurantList'
-import ShowBlackList from './ShowBlackList'
 import { Link } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css'
 import Button from '@material-ui/core/Button';
