@@ -44,37 +44,48 @@ class NewRestaurant extends Component {
   }
 
   render() {
+    let titleStyle = {
+      fontSize: '20px',
+      padding: '40px',
+      textAlign:'center',
+    }
+    let inputStytle = {
+      padding: '20px',
+    }
     return (
       <div>
-        <b>
-          Finish restaurant details
-        </b>
-        {/* <form onSubmit={this.add}> */}
+        <div style={titleStyle}>
+          <p>
+            Fill out restaurant details
+          </p>
+        </div>
         <form onSubmit={(event) => {
           event.preventDefault()
           this.addRestaurant(this.state.restaurantName, this.state.restaurantAddress)
         }}>
           <div>
-            <p>Restaurant Name:</p>
-            <input
-              className="form-input"
-              value={this.state.restaurantName}
-              onChange={e => this.setState({ restaurantName: e.target.value })}
-            />
-            <p>Restaurant Address:</p>
-            <input
-              className="form-input"
-              value={this.state.restaurantAddress}
-              onChange={e => this.setState({ restaurantAddress: e.target.value })
-              
-            }
-            />
+            <div style={inputStytle}>
+              <p>Restaurant Name:</p>
+              <input
+                className="form-input"
+                value={this.state.restaurantName}
+                onChange={e => this.setState({ restaurantName: e.target.value })}
+              />
+            </div>
+            <div style={inputStytle}>
+              <p>Restaurant Address:</p>
+              <input
+                className="form-input"
+                value={this.state.restaurantAddress}
+                onChange={e => this.setState({ restaurantAddress: e.target.value })}
+              />
+            </div>
           </div>
-          <button className="form-btn" type="submit" 
-          // disabled={!this.state.inputValue}
-          >
-            Add
-          </button>
+          <div style={inputStytle}>
+            <button className="form-btn" type="submit" >
+              Add
+            </button>
+          </div>
         </form>
       </div>
     )
