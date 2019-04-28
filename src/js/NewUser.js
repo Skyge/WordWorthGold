@@ -45,17 +45,25 @@ class NewUser extends Component {
     var pathBack = {
       pathname: '/',
     }
+    let titleStyle = {
+      fontSize: '20px',
+      padding: '40px',
+      textAlign:'center',
+    }
+    let inputStytle = {
+      padding: '20px',
+    }
     return (
-      <div>
-        <b>
+      <div style={titleStyle}>
+        <p>
           Register a new account
-        </b>
+        </p>
         <div>
           <form onSubmit={(event) => {
             event.preventDefault()
             this.userRegister(this.state.userName)
           }}>
-          <div>
+          <div style={inputStytle}>
             <p>User Name:</p>
             <input
               className="form-input"
@@ -63,11 +71,13 @@ class NewUser extends Component {
               onChange={e => this.setState({ userName: e.target.value })}
             />
           </div>
-          <button className="form-btn" type="submit" disabled={this.state.hasRegistered}>
-            Register
-          </button>
+          <div style={inputStytle}>
+            <button className="form-btn" type="submit" disabled={this.state.hasRegistered}>
+              Register
+            </button>
+          </div>
         </form>
-        <div>
+        <div style={inputStytle}>
             { this.state.hasRegistered && (<div>
                 <Link to={pathBack} >
                   <Button>
